@@ -4,7 +4,7 @@ import yt_dlp
 
 app = FastAPI()
 
-# Allow frontend/Bolt to access it
+# CORS for frontend
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],
@@ -12,6 +12,10 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+@app.get("/")
+def root():
+    return {"status": "ok"}
 
 @app.get("/download")
 def download_video(url: str = Query(...)):
